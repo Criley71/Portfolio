@@ -7,4 +7,6 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  site: 'https://criley71.github.io',
+  base: '/Portfolio',
 });

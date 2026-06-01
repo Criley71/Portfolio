@@ -1,5 +1,7 @@
 ---
 import { siteConfig } from "../config";
+import { Image } from "astro:assets";
+import ProfilePic from "../assets/headshot-2-crop.jpg"
 ---
 
 <section id="about" class="p-8 sm:p-12 md:p-16 lg:p-24">
@@ -16,8 +18,8 @@ import { siteConfig } from "../config";
         style={`background-color: ${siteConfig.accentColor}`}
         >
     </div>
-    <img
-                src="data/headshot-2-crop.jpg"
+    <Image
+                src={ProfilePic}
                 alt="Connor Riley's Headshot"
                 class="w-3/4 sm:w-2/3 lg:w-[66%] h-auto mt-8 rounded-lg"
             />

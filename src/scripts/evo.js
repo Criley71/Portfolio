@@ -259,7 +259,7 @@ export function startEvo(canvas) {
         const startX = originalPath[0].x;
         const endX = originalPath[originalPath.length - 1].x;
         if (best_score >= 100000) {
-            mutationSpread = 70; 
+            mutationSpread = 80; 
             mutationRate = 0.80; 
         }
         for (let i = 1; i < originalPath.length - 1; i++) {

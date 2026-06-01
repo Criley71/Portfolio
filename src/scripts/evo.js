@@ -258,8 +258,8 @@ export function startEvo(canvas) {
         const middlePoints = [];
         const startX = originalPath[0].x;
         const endX = originalPath[originalPath.length - 1].x;
-        if (parent.fitness >= 100000) {
-            mutationSpread = 80; 
+        if (best_score >= 100000) {
+            mutationSpread = 70; 
             mutationRate = 0.80; 
         }
         for (let i = 1; i < originalPath.length - 1; i++) {
@@ -269,6 +269,7 @@ export function startEvo(canvas) {
             let mutatedY = pt.y;
             if (Math.random() < mutationRate) {
                 mutatedX += randomGaussian(0, Math.floor(mutationSpread * 0.4));
+                mutatedX = Math.max(20, Math.min(worldWidth - 20, mutatedX));
                 //mutatedX = Math.max(startX, Math.min(endX, mutatedX));
                 mutatedY += randomGaussian(0, Math.floor(mutationSpread));
                 mutatedY = Math.max(0, Math.min(worldHeight, mutatedY));

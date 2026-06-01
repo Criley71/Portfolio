@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ] # Change this if your main branch is called 'master'
+    branches: [ master ] # Change this if your main branch is called 'master'
   workflow_dispatch:
 
 permissions:

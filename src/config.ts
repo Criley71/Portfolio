@@ -31,7 +31,7 @@ export const siteConfig = {
       name: "FLAC Algorithm Encoding Analysis",
       description:
         "A deep dive into the Free Lossless Audio Codec (FLAC) algorithm and analyzing its performance",
-      link: "https://extensionkit.io/?ref=devportfolio",
+      link: "https://criley71.github.io/FLAC-Analysis-Report/",
       skills: ["Python", "MatPlotLib", "Algorithms"],
     },
   ],

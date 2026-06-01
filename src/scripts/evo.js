@@ -26,6 +26,38 @@ export function startEvo(canvas) {
     const pauseText = document.getElementById('pause-text');
     const iconPause = document.getElementById('icon-pause');
     const iconPlay = document.getElementById('icon-play');
+    const regenBtn = document.getElementById('regen-button');
+    function resetSimulation() {
+        const wasFinished = (current_gen >= max_gens);
+        current_gen = 0;
+        best_gen = 0;
+        best_score = Number.MAX_VALUE;
+        best_gens.length = 0; 
+        obstacles = genObstacles(worldWidth, worldHeight, startPoint, endPoint);
+        population = [];
+        for (let i = 0; i < populationSize; i++) {
+            population.push({ path: createIndividual(startPoint, endPoint) });
+        }
+        const scoreDisplay = document.getElementById('score-display');
+        const genDisplay = document.getElementById('gen-display');
+        const bestGenDisplay = document.getElementById('gen-score-display');
+        if (scoreDisplay) scoreDisplay.innerText = "0";
+        if (genDisplay) genDisplay.innerText = "0";
+        if (bestGenDisplay) bestGenDisplay.innerText = "0";
+        if (!isRunning || wasFinished) {
+            isRunning = true;
+            const pauseText = document.getElementById('pause-text');
+            const iconPause = document.getElementById('icon-pause');
+            const iconPlay = document.getElementById('icon-play');
+            
+            if (pauseText) pauseText.innerText = "Pause";
+            if (iconPlay) iconPlay.classList.add('hidden');
+            if (iconPause) iconPause.classList.remove('hidden');
+            
+            lastTime = performance.now();
+            requestAnimationFrame(evolve);
+        }
+    }
     function getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -219,13 +251,17 @@ export function startEvo(canvas) {
     // }
     function mutate(parent) {
         const progress = current_gen / max_gens;
-        const mutationSpread = 60 * (1 - progress) + 3; 
-        const mutationRate = 0.40; 
+        let mutationSpread = 60 * (1 - progress) + 3; 
+        let mutationRate = 0.40; 
         const originalPath = parent.path;
         const newPath = [];
         const middlePoints = [];
         const startX = originalPath[0].x;
         const endX = originalPath[originalPath.length - 1].x;
+        if (parent.fitness >= 100000) {
+            mutationSpread = 80; 
+            mutationRate = 0.80; 
+        }
         for (let i = 1; i < originalPath.length - 1; i++) {
             const pt = originalPath[i];
 
@@ -314,14 +350,14 @@ export function startEvo(canvas) {
         }
     }
 
-    const obstacles = genObstacles(worldWidth, worldHeight, startPoint, endPoint);
+    let obstacles = genObstacles(worldWidth, worldHeight, startPoint, endPoint);
     //const track = genTrack(worldWidth, worldHeight, startPoint, endPoint);
     for (let i = 0; i < populationSize; i++) {
         const newPath = createIndividual(startPoint, endPoint);
         population.push({ path: newPath });
     }
     let lastTime = 0;
-    const targetFPS =60;
+    const targetFPS =45;
     const frameInterval = 1000 / targetFPS;
 
     function evolve(timestamp) {
@@ -372,21 +408,23 @@ export function startEvo(canvas) {
             isRunning = !isRunning; // Flip the state (true -> false, or false -> true)
 
             if (isRunning) {
-                // We are resuming!
                 pauseText.innerText = "Pause";
                 iconPlay.classList.add('hidden');
                 iconPause.classList.remove('hidden');
                 
-                // Restart the engine
                 lastTime = performance.now(); 
                 requestAnimationFrame(evolve); 
             } else {
-                // We are pausing!
                 pauseText.innerText = "Play";
                 iconPause.classList.add('hidden');
                 iconPlay.classList.remove('hidden');
             }
         });
+    }
+    
+
+    if (regenBtn) {
+        regenBtn.addEventListener('click', resetSimulation);
     }
     //console.log(best_gens);
     requestAnimationFrame(evolve);

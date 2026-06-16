@@ -21,14 +21,13 @@ export function startEvo(canvas) {
     const max_gens = 2001;
     let current_gen = 0;
     const best_gens = [];
-    let isRunning = true;
+    let isRunning = false;
     const pauseBtn = document.getElementById('pause-button');
     const pauseText = document.getElementById('pause-text');
     const iconPause = document.getElementById('icon-pause');
     const iconPlay = document.getElementById('icon-play');
     const regenBtn = document.getElementById('regen-button');
     function resetSimulation() {
-        const wasFinished = (current_gen >= max_gens);
         current_gen = 0;
         best_gen = 0;
         best_score = Number.MAX_VALUE;
@@ -44,19 +43,16 @@ export function startEvo(canvas) {
         if (scoreDisplay) scoreDisplay.innerText = "0";
         if (genDisplay) genDisplay.innerText = "0";
         if (bestGenDisplay) bestGenDisplay.innerText = "0";
-        if (!isRunning || wasFinished) {
-            isRunning = true;
-            const pauseText = document.getElementById('pause-text');
-            const iconPause = document.getElementById('icon-pause');
-            const iconPlay = document.getElementById('icon-play');
-            
-            if (pauseText) pauseText.innerText = "Pause";
-            if (iconPlay) iconPlay.classList.add('hidden');
-            if (iconPause) iconPause.classList.remove('hidden');
-            
-            lastTime = performance.now();
-            requestAnimationFrame(evolve);
-        }
+        isRunning = false; 
+        const pauseText = document.getElementById('pause-text');
+        const iconPause = document.getElementById('icon-pause');
+        const iconPlay = document.getElementById('icon-play');
+        
+        if (pauseText) pauseText.innerText = "Play";
+        if (iconPause) iconPause.classList.add('hidden');
+        if (iconPlay) iconPlay.classList.remove('hidden');
+
+        drawCanvas(false);
     }
     function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -404,6 +400,7 @@ export function startEvo(canvas) {
         
         requestAnimationFrame(evolve);
     }
+    drawCanvas(false);
     if (pauseBtn) {
         pauseBtn.addEventListener('click', () => {
             isRunning = !isRunning; // Flip the state (true -> false, or false -> true)
@@ -428,5 +425,5 @@ export function startEvo(canvas) {
         regenBtn.addEventListener('click', resetSimulation);
     }
     //console.log(best_gens);
-    requestAnimationFrame(evolve);
+    //requestAnimationFrame(evolve);
 }

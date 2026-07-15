@@ -45,7 +45,7 @@ export const siteConfig = {
       name: ".NET Based Steganographic Password Manager",
       description:
         "A .NET based desktop password manager that stores your passwords in images for extra crytogrpahic protection",
-      link: "https://github.com/Criley71/Pangolin-Shell",
+      link: "https://github.com/Criley71/Steganographic-Password-Manager",
       skills: ["C#", ".NET", "Cryptography"],
     },
   ],

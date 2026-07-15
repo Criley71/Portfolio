@@ -34,6 +34,20 @@ export const siteConfig = {
       link: "https://criley71.github.io/FLAC-Analysis-Report/",
       skills: ["Python", "MatPlotLib", "Algorithms"],
     },
+    {
+      name: "Pangolin - A C++ Based Unix Shell",
+      description:
+        "A unix shell written entirely in C++ aimed at replicating the bash shell. Its also named after my favorite animal!",
+      link: "https://github.com/Criley71/Pangolin-Shell",
+      skills: ["C++", "Unix", "CMake"],
+    },
+    {
+      name: ".NET Based Steganographic Password Manager",
+      description:
+        "A .NET based desktop password manager that stores your passwords in images for extra crytogrpahic protection",
+      link: "https://github.com/Criley71/Pangolin-Shell",
+      skills: ["C#", ".NET", "Cryptography"],
+    },
   ],
   experience: [
     // {
